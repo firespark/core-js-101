@@ -23,5 +23,9 @@ module.exports = {
     "no-trailing-spaces": 0,
     "radix": 0,
     "arrow-parens": 0,
+    "space-in-parens": 0,
+    "eqeqeq": 0,
+    "max-len": 0,
+    "spaced-comment": 0,
   },
 };
