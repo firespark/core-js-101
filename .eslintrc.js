@@ -16,5 +16,12 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
+    "linebreak-style": 0,
+    "no-plusplus": 0,
+    "prefer-template": 0,
+    "padded-blocks": 0,
+    "no-trailing-spaces": 0,
+    "radix": 0,
+    "arrow-parens": 0,
   },
 };
