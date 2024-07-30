@@ -27,5 +27,7 @@ module.exports = {
     "eqeqeq": 0,
     "max-len": 0,
     "spaced-comment": 0,
+    "arrow-body-style": 0,
+    "brace-style": 0,
   },
 };
