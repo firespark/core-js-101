@@ -280,11 +280,13 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-  const strArr = ccn.toString().split('');
+  ccn = ccn.toString();
+  const strArr = ccn.split('');
 
   let sum = 0;
   strArr.forEach( (el, key) => {
-    if ((key + 1) % 2 === 0) {
+    const index = (ccn.length % 2 === 0) ? key : key + 1;
+    if ((index) % 2 === 0) {
       
       const incr = parseInt(el) * 2;
       sum += (incr > 9) ? incr - 9 : incr;
@@ -355,42 +357,46 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true
  */
 function isBracketsBalanced(str) {
-    
-  const arr = []; 
-  
-  for (let i = 0; i < str.length; i++) { 
-  
-    if (str[i] === '(' || str[i] === '[' || str[i] === '{') { 
-      arr.push(str[i]); 
-    } 
-  
-    if (arr.length === 0) return false; 
-              
-    const lastEl = (str[i] === ']' || str[i] === '}' || str[i] === ')') ? arr.pop() : ''; 
-      
-    switch (str[i]) { 
-      
-      case ']': 
-        if (lastEl === '{' || lastEl === '(') return false; 
-        break; 
 
-      case '}': 
-        if (lastEl === '[' || lastEl === '(') return false; 
-        break; 
-        
-      case ')': 
-        if (lastEl === '[' || lastEl === '{') return false; 
-        break; 
+  if (str === '') return true;
 
+  const arr = [];
+
+  for (let i = 0; i < str.length; i++) {
+
+    if (str[i] === '(' || str[i] === '[' || str[i] === '{' || str[i] === '<') {
+      arr.push(str[i]);
+    }
+
+    if (arr.length === 0) return false;
+
+    const lastEl = (str[i] === ']' || str[i] === '}' || str[i] === ')' || str[i] === '>') ? arr.pop() : '';
+
+    switch (str[i]) {
+
+      case ']':
+        if (lastEl === '{' || lastEl === '(' || lastEl === '<') return false;
+        break;
+
+      case '}':
+        if (lastEl === '[' || lastEl === '(' || lastEl === '<') return false;
+        break;
+
+      case ')':
+        if (lastEl === '[' || lastEl === '{' || lastEl === '<') return false;
+        break;
+      case '>':
+        if (lastEl === '[' || lastEl === '{' || lastEl === '(') return false;
+        break;
       default:
         break;
-  
-    } 
-  
-  } 
-  
+
+    }
+
+  }
+
   return (arr.length === 0);
-  
+
 }
 
 
@@ -432,8 +438,23 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(paths) {
+  let commonDirectoryPath = paths[0].match(/[^\/]+\/?|\//g);
+
+  paths.forEach(path => {
+    const currentPathFolders = path.match(/[^\/]+\/?|\//g);
+
+    for (let i = 0; i < currentPathFolders.length; i++) {
+      if (currentPathFolders[i] != commonDirectoryPath[i]) {
+        commonDirectoryPath = commonDirectoryPath.slice(0, i);
+      }
+    }
+
+  });
+
+  const commonPathString = commonDirectoryPath.join('');
+  return commonPathString;
+
 }
 
 
@@ -490,8 +511,40 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(rows) {
+  let winner;
+  const rowWin = () => {
+    for (let i = 0; i < 3; i++) {
+
+      if (rows[i].length < 3) continue;
+      const base = rows[i][0];
+      if ((base == '0' || base == 'X') && rows[i].every(value => (value === base))) return base;
+    }
+  };
+
+  const columnWin = () => {
+    for (let i = 0; i < 3; i++) {
+      const base = rows[0][i];
+      const column = [rows[0][i], rows[1][i], rows[2][i]];
+      if ((base == '0' || base == 'X') && column.every(value => (value === base))) return base;
+    }
+  };
+
+  const diagWin = () => {
+    for (let i = 0; i < 3; i += 2) {
+      const base = rows[0][i];
+      let diag;
+      if (i == 0) diag = [rows[0][0], rows[1][1], rows[2][2]];
+      if (i == 2) diag = [rows[0][2], rows[1][1], rows[2][0]];
+      if ((base == '0' || base == 'X') && diag.every(value => (value === base))) return base;
+    }
+  };
+
+  if (rowWin()) winner = rowWin();
+  if (columnWin()) winner = columnWin();
+  if (diagWin()) winner = diagWin();
+
+  return winner;
 }
 
 

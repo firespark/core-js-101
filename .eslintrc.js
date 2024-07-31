@@ -30,5 +30,9 @@ module.exports = {
     "arrow-body-style": 0,
     "brace-style": 0,
     "operator-assignment": 0,
+    "no-useless-escape": 0,
+    "consistent-return": 0,
+    "no-param-reassign": 0,
+    "no-continue": 0,
   },
 };
