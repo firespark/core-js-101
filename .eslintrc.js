@@ -29,5 +29,6 @@ module.exports = {
     "spaced-comment": 0,
     "arrow-body-style": 0,
     "brace-style": 0,
+    "operator-assignment": 0,
   },
 };
