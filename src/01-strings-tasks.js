@@ -52,7 +52,7 @@ function getStringLength(value) {
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-  return 'Hello, ' + firstName + ' ' + lastName + '!';
+  return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
@@ -226,7 +226,7 @@ function getRectangleString(width, height) {
 function encodeToRot13(str) {
   let result = '';
 
-  for (let i = 0; i < str.length; i++) {
+  for (let i = 0; i < str.length; i += 1) {
     const code = str[i].toUpperCase().charCodeAt(0);
 
     let shift = 0;
@@ -253,7 +253,6 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-  
   if (value && typeof value === 'object') {
     return typeof value.valueOf() === 'string';
   }
@@ -291,13 +290,11 @@ function getCardId(value) {
   const card = value.slice(0, -1);
   const suit = value[value.length - 1].codePointAt(0);
 
-  const firstKey = parseInt(Object.keys(cards).find(k => cards[k] === card));
-  const secondKey = parseInt(Object.keys(suits).find(k => suits[k] === suit));
+  const firstKey = parseInt(Object.keys(cards).find((k) => cards[k] === card), 10);
+  const secondKey = parseInt(Object.keys(suits).find((k) => suits[k] === suit), 10);
 
   return secondKey * 13 + firstKey;
-
 }
-
 
 module.exports = {
   concatenateStrings,

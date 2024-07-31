@@ -30,9 +30,7 @@
 function getFizzBuzz(num) {
   let result = '';
   if (num % 3 === 0) result += 'Fizz';
-  
   if (num % 5 === 0) result += 'Buzz';
-  
   if (result) return result;
 
   return num;
@@ -70,9 +68,7 @@ function getFactorial(n) {
 function getSumBetweenNumbers(n1, n2) {
   const arr = Array(n2 - n1 + 1).fill(0);
 
-  return arr.reduce((acc, el, i) => {
-    return acc + n1 + i;
-  }, 0);
+  return arr.reduce((acc, el, i) => (acc + n1 + i), 0);
 }
 
 
@@ -92,7 +88,7 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,10,10 =>  true
  */
 function isTriangle(a, b, c) {
-  if ( (a + b > c) && (a + c > b) && (b + c > a) ) return true;
+  if ((a + b > c) && (a + c > b) && (b + c > a)) return true;
   return false;
 }
 
@@ -180,17 +176,15 @@ function isInsideCircle(circle, point) {
  */
 function findFirstSingleChar(str) {
   const arr = [];
-  for (let i = 0; i < str.length; i++) {
-    
+  for (let i = 0; i < str.length; i += 1) {
     if (!arr[str[i]]) {
       arr[str[i]] = 1;
-    }
-    else {
-      arr[str[i]] = arr[str[i]] + 1;
+    } else {
+      arr[str[i]] += 1;
     }
   }
 
-  return Object.keys(arr).find(k => arr[k] === 1) || null;
+  return Object.keys(arr).find((k) => arr[k] === 1) || null;
 }
 
 
@@ -238,7 +232,7 @@ function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
  * 'noon' => 'noon'
  */
 function reverseString(str) {
-  return str.split('').reverse().join(''); 
+  return str.split('').reverse().join('');
 }
 
 
@@ -280,23 +274,21 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-  ccn = ccn.toString();
-  const strArr = ccn.split('');
+  const ccnStr = ccn.toString();
+  const strArr = ccnStr.split('');
 
   let sum = 0;
-  strArr.forEach( (el, key) => {
-    const index = (ccn.length % 2 === 0) ? key : key + 1;
+  strArr.forEach((el, key) => {
+    const index = (ccnStr.length % 2 === 0) ? key : key + 1;
     if ((index) % 2 === 0) {
-      
-      const incr = parseInt(el) * 2;
+      const incr = parseInt(el, 10) * 2;
       sum += (incr > 9) ? incr - 9 : incr;
-    }
-    else {
-      sum += parseInt(el);
+    } else {
+      sum += parseInt(el, 10);
     }
   });
 
-  return sum % 10 == 0;
+  return sum % 10 === 0;
 }
 
 /**
@@ -315,8 +307,8 @@ function isCreditCardNumber(ccn) {
  */
 function countNumbers(arr) {
   let sum = 0;
-  arr.forEach( (el) => {
-    sum += parseInt(el);
+  arr.forEach((el) => {
+    sum += parseInt(el, 10);
   });
 
   return sum;
@@ -330,8 +322,6 @@ function getDigitalRoot(num) {
   const resultArr = result.toString().split('');
 
   return (resultArr.length > 1) ? countNumbers(resultArr) : result;
-
-
 }
 
 
@@ -357,13 +347,11 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true
  */
 function isBracketsBalanced(str) {
-
   if (str === '') return true;
 
   const arr = [];
 
-  for (let i = 0; i < str.length; i++) {
-
+  for (let i = 0; i < str.length; i += 1) {
     if (str[i] === '(' || str[i] === '[' || str[i] === '{' || str[i] === '<') {
       arr.push(str[i]);
     }
@@ -373,7 +361,6 @@ function isBracketsBalanced(str) {
     const lastEl = (str[i] === ']' || str[i] === '}' || str[i] === ')' || str[i] === '>') ? arr.pop() : '';
 
     switch (str[i]) {
-
       case ']':
         if (lastEl === '{' || lastEl === '(' || lastEl === '<') return false;
         break;
@@ -390,13 +377,10 @@ function isBracketsBalanced(str) {
         break;
       default:
         break;
-
     }
-
   }
 
   return (arr.length === 0);
-
 }
 
 
@@ -439,22 +423,20 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(paths) {
-  let commonDirectoryPath = paths[0].match(/[^\/]+\/?|\//g);
+  let commonDirectoryPath = paths[0].match(/[^/]+\/?|\//g);
 
-  paths.forEach(path => {
-    const currentPathFolders = path.match(/[^\/]+\/?|\//g);
+  paths.forEach((path) => {
+    const currentPathFolders = path.match(/[^/]+\/?|\//g);
 
-    for (let i = 0; i < currentPathFolders.length; i++) {
-      if (currentPathFolders[i] != commonDirectoryPath[i]) {
+    for (let i = 0; i < currentPathFolders.length; i += 1) {
+      if (currentPathFolders[i] !== commonDirectoryPath[i]) {
         commonDirectoryPath = commonDirectoryPath.slice(0, i);
       }
     }
-
   });
 
   const commonPathString = commonDirectoryPath.join('');
   return commonPathString;
-
 }
 
 
@@ -514,30 +496,33 @@ function getMatrixProduct(/* m1, m2 */) {
 function evaluateTicTacToePosition(rows) {
   let winner;
   const rowWin = () => {
-    for (let i = 0; i < 3; i++) {
-
-      if (rows[i].length < 3) continue;
-      const base = rows[i][0];
-      if ((base == '0' || base == 'X') && rows[i].every(value => (value === base))) return base;
+    for (let i = 0; i < 3; i += 1) {
+      if (rows[i].length >= 3) {
+        const base = rows[i][0];
+        if ((base === '0' || base === 'X') && rows[i].every((value) => (value === base))) return base;
+      }
     }
+    return winner;
   };
 
   const columnWin = () => {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i += 1) {
       const base = rows[0][i];
       const column = [rows[0][i], rows[1][i], rows[2][i]];
-      if ((base == '0' || base == 'X') && column.every(value => (value === base))) return base;
+      if ((base === '0' || base === 'X') && column.every((value) => (value === base))) return base;
     }
+    return winner;
   };
 
   const diagWin = () => {
     for (let i = 0; i < 3; i += 2) {
       const base = rows[0][i];
       let diag;
-      if (i == 0) diag = [rows[0][0], rows[1][1], rows[2][2]];
-      if (i == 2) diag = [rows[0][2], rows[1][1], rows[2][0]];
-      if ((base == '0' || base == 'X') && diag.every(value => (value === base))) return base;
+      if (i === 0) diag = [rows[0][0], rows[1][1], rows[2][2]];
+      if (i === 2) diag = [rows[0][2], rows[1][1], rows[2][0]];
+      if ((base === '0' || base === 'X') && diag.every((value) => (value === base))) return base;
     }
+    return winner;
   };
 
   if (rowWin()) winner = rowWin();

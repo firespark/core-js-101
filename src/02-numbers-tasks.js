@@ -53,13 +53,12 @@ function getCircleCircumference(radius) {
  */
 function getAverage(value1, value2) {
   if (Number.isFinite(value1) && Number.isFinite(value2)) {
-    //return (value1 + value2) / 2;
+    // return (value1 + value2) / 2;
     const max = Math.max(value1, value2);
     const min = Math.min(value1, value2);
     return min / 2 + max / 2;
   }
   return Infinity;
-  
 }
 
 /**
@@ -117,7 +116,10 @@ function getLinearEquationRoot(a, b) {
  *   (0,1) (1,2)     => 0
  */
 function getAngleBetweenVectors(x1, y1, x2, y2) {
-  return Math.acos( (x1 * x2 + y1 * y2) / Math.sqrt(x1 ** 2 + y1 ** 2) / Math.sqrt(x2 ** 2 + y2 ** 2) );
+  const n1 = x1 * x2 + y1 * y2;
+  const n2 = x1 ** 2 + y1 ** 2;
+  const n3 = x2 ** 2 + y2 ** 2;
+  return Math.acos((n1) / Math.sqrt(n2) / Math.sqrt(n3));
 }
 
 /**
@@ -213,8 +215,8 @@ function isPrime(n) {
 
   if (n < 2) return false;
 
-  for (let i = 2; i < Math.sqrt(n) + 1; i++) {  
-    if (n % i == 0) return false;
+  for (let i = 2; i < Math.sqrt(n) + 1; i += 1) {
+    if (n % i === 0) return false;
   }
 
   return true;
